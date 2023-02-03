@@ -1,8 +1,8 @@
-**_Linked List_**
+# Linked List
 
 -   Singly Linked List implemented with JavaScript
 
-**_Features_**
+## Features
 
 -   addToHead(value) adds a new node containing value to the end of the list or to start if list is empty
 -   addToTail(value) adds a new node containing value to the start of the list
