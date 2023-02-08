@@ -68,6 +68,47 @@ class Tree {
         }
     }
 
+    // * Breadth-first traversal --- levelOrder.
+    levelOrder(callbackFn, root = this.root) {
+        if (root === null) return;
+
+        const levelOrderArr = [];
+        // * Initialize the queue with the root.
+        const queue = [root];
+
+        while (queue.length > 0) {
+            // * Get reference to the first node.
+            let currentNode = queue[0];
+            /*
+             * Check for callback existence. If it doesn't exist, push to a separate array to be returned, directly,
+             * before enqueuing children.
+             */
+            callbackFn
+                ? callbackFn(currentNode)
+                : levelOrderArr.push(currentNode.value);
+            // * Enqueue left node reference before right node reference, if they exist, in that order.
+            if (currentNode.left !== null) queue.push(currentNode.left);
+            if (currentNode.right !== null) queue.push(currentNode.right);
+            // * Finally, Dequeue the first element in then queue, which has already been handled, by this point.
+            queue.shift();
+        }
+        // * Return the levelOrder array, if no callbackFn is passed, to handle each node, in the loop.
+        return levelOrderArr;
+    }
+
+    // * Depth-first --- inOrder.
+    inOrder(callbackFn, node = this.root, inOrderArr = []) {
+        if (node === null) return;
+
+        // * inOrder --- L, data, R.
+        // * *** Always results in sorted fashion. ***
+        this.inOrder(callbackFn, node.left, inOrderArr);
+        callbackFn ? callbackFn(node) : inOrderArr.push(node.value);
+        this.inOrder(callbackFn, node.right, inOrderArr);
+
+        return inOrderArr;
+    }
+
     insert(value, root = this.root) {
         // * Prevents non-values from inserting into tree.
         if (!value)
@@ -75,7 +116,7 @@ class Tree {
                 "An empty, non-value was passed as an argument, to the value parameter."
             );
 
-        // * Base case for when root is pointing to null, return the node.
+        // * Base case for when root is pointing to null, return the new node.
         if (root === null) {
             return new Node(value);
         }
@@ -92,6 +133,18 @@ class Tree {
         }
 
         return root;
+    }
+
+    // * Depth-first --- preOrder.
+    preOrder(callbackFn, node = this.root, preOrderArr = []) {
+        if (node === null) return;
+
+        // * preOrder --- Data, L, R.
+        callbackFn ? callbackFn(node) : preOrderArr.push(node.value);
+        this.preOrder(callbackFn, node.left, preOrderArr);
+        this.preOrder(callbackFn, node.right, preOrderArr);
+
+        return preOrderArr;
     }
 
     // Prints the tree in a visually structured format, to the console.
@@ -114,7 +167,19 @@ class Tree {
         }
     }
 
-    // * Private Methods
+    // * Depth-first --- postOrder.
+    postOrder(callbackFn, node = this.root, postOrderArr = []) {
+        if (node === null) return;
+
+        // * postOrder --- L, R, data.
+        this.postOrder(callbackFn, node.left, postOrderArr);
+        this.postOrder(callbackFn, node.right, postOrderArr);
+        callbackFn ? callbackFn(node) : postOrderArr.push(node.value);
+
+        return postOrderArr;
+    }
+
+    // * --- Private Method(s) ---
 
     _deleteHelper(node) {
         // * Is a leaf node --- no left or right node pointers (both null)
