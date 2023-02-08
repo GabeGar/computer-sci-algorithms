@@ -18,7 +18,7 @@ class Tree {
         this.root = this.buildTree(sortedArr);
     }
 
-    // Builds the tree, from a sorted array.
+    // * Builds a tree, from a sorted array, upon initialization of the tree class object.
     buildTree(sortedArray) {
         if (sortedArray.length === 0 || sortedArray[0] === null) return null;
 
@@ -29,6 +29,7 @@ class Tree {
         return node;
     }
 
+    // * Removes a value, if present in the tree.
     delete(value, root = this.root) {
         if (!value)
             throw new Error(
@@ -50,9 +51,32 @@ class Tree {
         return root;
     }
 
-    // Finds a specified value and returns the node which contains it, or null when value not found.
+    // * Returns the depth of a node, by passing it's value as the parameter.
+    depth(node, root = this.root) {
+        // * Default to -1, if there is no node argument passed.
+        if (!node) return -1;
+
+        // * Base case
+        if (root === null) return -1;
+
+        // * Check if the node passed in is equal to the current node.
+        if (root.value === node.value) return 0;
+
+        // * Check if the node is in the left subtree.
+        let left = this.depth(node, root.left);
+        if (left >= 0) return left + 1;
+
+        // * Check if the node is in the right subtree.
+        let right = this.depth(node, root.right);
+        if (right >= 0) return right + 1;
+
+        // * Return -1 if node is not found in the tree.
+        return -1;
+    }
+
+    // * Finds a specified value and returns the node which contains it, or null when value not found.
     find(value, root = this.root) {
-        // * Base case for when root is null (value not found) or value is found
+        // * Base case for when root is null (value not found) or value is found.
         if (root === null || root.value === value) {
             return root;
         }
@@ -66,6 +90,25 @@ class Tree {
         } else {
             return this.find(value, root.left);
         }
+    }
+
+    /*
+     * Obtain height of node in the tree, a passed node or root (by default),
+     * to the leaf node (has 0 children; pointers both === null).
+     */
+    height(node = this.root) {
+        /*
+         * Balances out the final return value, since the leaf node edges, pointing to null,
+         * do not count towards a positive tree height.
+         */
+        if (node === null) return -1;
+
+        // * Traverse down the left and right subtrees until a leaf node is met that has both values === null (base case).
+        let leftHeight = this.height(node.left);
+        let rightHeight = this.height(node.right);
+
+        // * Math.max to return the greater of the two values and add 1, to offset the final height of the tree.
+        return Math.max(leftHeight, rightHeight) + 1;
     }
 
     // * Breadth-first traversal --- levelOrder.
@@ -109,6 +152,7 @@ class Tree {
         return inOrderArr;
     }
 
+    // * Inserts a value, if not already present in tree.
     insert(value, root = this.root) {
         // * Prevents non-values from inserting into tree.
         if (!value)
@@ -147,7 +191,7 @@ class Tree {
         return preOrderArr;
     }
 
-    // Prints the tree in a visually structured format, to the console.
+    // * Prints the tree in a visually structured format, to the console.
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (node.right) {
             this.prettyPrint(
@@ -182,7 +226,7 @@ class Tree {
     // * --- Private Method(s) ---
 
     _deleteHelper(node) {
-        // * Is a leaf node --- no left or right node pointers (both null)
+        // * Is a leaf node --- no left or right node pointers (both null).
         if (node.left === null && node.right === null) {
             return null;
 

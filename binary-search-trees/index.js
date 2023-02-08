@@ -12,4 +12,3 @@ const unsortedArr = [
 const tree = new Tree(unsortedArr);
 console.log(tree);
 tree.prettyPrint();
-console.log(tree.preOrder(), tree.inOrder(), tree.levelOrder());
