@@ -12,3 +12,7 @@ const unsortedArr = [
 const tree = new Tree(unsortedArr);
 console.log(tree);
 tree.prettyPrint();
+tree.delete(11);
+tree.prettyPrint();
+
+// console.log(tree.find(42));
