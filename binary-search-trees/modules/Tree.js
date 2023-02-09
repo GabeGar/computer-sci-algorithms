@@ -15,18 +15,7 @@ export default class Tree {
         // Sets the class attribute root, as the node returned from buildTree.
         // If any empty array is passed, a new array with only the value of null is passed.
         const sortedArr = [...new Set(array)].sort((a, b) => (a > b ? 1 : -1));
-        this.root = this.buildTree(sortedArr);
-    }
-
-    // * Builds a tree, from a sorted array, upon initialization of the tree class object.
-    buildTree(sortedArray) {
-        if (sortedArray.length === 0 || sortedArray[0] === null) return null;
-
-        const midPoint = Math.floor(sortedArray.length / 2);
-        const node = new Node(sortedArray[midPoint]);
-        node.left = this.buildTree(sortedArray.slice(0, midPoint));
-        node.right = this.buildTree(sortedArray.slice(midPoint + 1));
-        return node;
+        this.root = this._buildTree(sortedArr);
     }
 
     // * Removes a value, if present in the tree.
@@ -245,10 +234,21 @@ export default class Tree {
 
         // * Assign the tree root to the newly built tree, from the buildTree method.
         // * Returns the new balanced tree.
-        return (this.root = this.buildTree(newList));
+        return (this.root = this._buildTree(newList));
     }
 
     // * --- Private Method(s) ---
+
+    // * Builds a tree, from a sorted array, upon initialization of the tree class object.
+    _buildTree(sortedArray) {
+        if (sortedArray.length === 0 || sortedArray[0] === null) return null;
+
+        const midPoint = Math.floor(sortedArray.length / 2);
+        const node = new Node(sortedArray[midPoint]);
+        node.left = this._buildTree(sortedArray.slice(0, midPoint));
+        node.right = this._buildTree(sortedArray.slice(midPoint + 1));
+        return node;
+    }
 
     _deleteHelper(node) {
         // * Is a leaf node --- no left or right node pointers (both null).
