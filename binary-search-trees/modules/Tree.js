@@ -9,7 +9,7 @@ import Node from "./Node.js";
  * Print the pre-order of the tree.
  */
 
-class Tree {
+export default class Tree {
     constructor(array) {
         // Initialize tree class with a sorted, non-repeating values, array.
         // Sets the class attribute root, as the node returned from buildTree.
@@ -109,6 +109,22 @@ class Tree {
 
         // * Math.max to return the greater of the two values and add 1, to offset the final height of the tree.
         return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    /*
+     * Checks to see if tree is balanced.
+     * Difference between heights of left subtree and right subtree of every node is not more than 1.
+     */
+    isBalanced(node = this.root) {
+        // * If tree is empty
+        if (node === null) return true;
+
+        let leftHeight = this.height(node.left);
+        let rightHeight = this.height(node.right);
+
+        // * Evaluate the absolute difference between the two heights, against being less than or equal to 1.
+        // * Returns a boolean, based on the condition.
+        return Math.abs(leftHeight - rightHeight) <= 1;
     }
 
     // * Breadth-first traversal --- levelOrder.
@@ -223,6 +239,18 @@ class Tree {
         return postOrderArr;
     }
 
+    reBalance() {
+        // * Prevents code execution, if tree is already balanced.
+        if (this.isBalanced()) return this;
+
+        // * Get a new ordered list, from inOrder traversal method.
+        const newList = this.inOrder();
+
+        // * Assign the tree root to the newly built tree, from the buildTree method.
+        // * Returns the new balanced tree.
+        return (this.root = this.buildTree(newList));
+    }
+
     // * --- Private Method(s) ---
 
     _deleteHelper(node) {
@@ -272,5 +300,3 @@ class Tree {
         return node;
     }
 }
-
-export default Tree;
