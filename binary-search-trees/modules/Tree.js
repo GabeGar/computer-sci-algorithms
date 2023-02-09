@@ -111,22 +111,6 @@ export default class Tree {
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
-    /*
-     * Checks to see if tree is balanced.
-     * Difference between heights of left subtree and right subtree of every node is not more than 1.
-     */
-    isBalanced(node = this.root) {
-        // * If tree is empty
-        if (node === null) return true;
-
-        let leftHeight = this.height(node.left);
-        let rightHeight = this.height(node.right);
-
-        // * Evaluate the absolute difference between the two heights, against being less than or equal to 1.
-        // * Returns a boolean, based on the condition.
-        return Math.abs(leftHeight - rightHeight) <= 1;
-    }
-
     // * Breadth-first traversal --- levelOrder.
     levelOrder(callbackFn, root = this.root) {
         if (root === null) return;
@@ -171,10 +155,7 @@ export default class Tree {
     // * Inserts a value, if not already present in tree.
     insert(value, root = this.root) {
         // * Prevents non-values from inserting into tree.
-        if (!value)
-            throw new Error(
-                "An empty, non-value was passed as an argument, to the value parameter."
-            );
+        if (!value) return null;
 
         // * Base case for when root is pointing to null, return the new node.
         if (root === null) {
@@ -193,6 +174,22 @@ export default class Tree {
         }
 
         return root;
+    }
+
+    /*
+     * Checks to see if tree is balanced.
+     * Difference between heights of left subtree and right subtree of every node is not more than 1.
+     */
+    isBalanced(node = this.root) {
+        // * If tree is empty
+        if (node === null) return true;
+
+        let leftHeight = this.height(node.left);
+        let rightHeight = this.height(node.right);
+
+        // * Evaluate the absolute difference between the two heights, against being less than or equal to 1.
+        // * Returns a boolean, based on the condition.
+        return Math.abs(leftHeight - rightHeight) <= 1;
     }
 
     // * Depth-first --- preOrder.
