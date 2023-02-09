@@ -31,7 +31,7 @@ console.log(tree.postOrder());
 
 // * Unbalance the tree by adding several numbers > 100.
 console.log("\n");
-console.log("Inserting 100 random values into tree, from 0 to 500.");
+console.log("Inserting 100 random values into tree, from 0 to 1000.");
 
 for (let i = 1; i !== 100; i++) {
     tree.insert(Math.floor(Math.random() * 1001));
