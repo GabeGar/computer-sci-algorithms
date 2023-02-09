@@ -12,11 +12,11 @@ An implementation of a binary search tree data structure.
 -   inOrder() - Traverses all nodes of the tree, inOrder (Left, Print-Data, Right).
 -   preOrder() - Traverses all nodes of the tree, preOrder. (Print-Data, Left, Right).
 -   postOrder() - Traverses all nodes of the tree, in postOrder. (Left, Right, Print-Data).
--   height(node) - Returns the height of a node or tree, itself.
+-   height(node) - Returns the height of a node or the tree, itself.
 -   depth(node) - Returns the depth of a node or the tree, itself.
 -   isBalanced() - Returns true/false, if the tree is balanced or otherwise.
--   reBalance() - Re-balances the tree, utilizing the inOrder() method, to get a sorted array.
--   prettyPrint() - Prints the tree visually, to the console.
+-   reBalance() - Re-balances the tree, utilizing the inOrder() method, to get a sorted array and re-balance the tree.
+-   prettyPrint() - Prints the tree for visualization, in the console.
 
 ### Private Helper Methods:
 
